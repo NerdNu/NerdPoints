@@ -1,0 +1,50 @@
+name: ${project.name}
+version: ${project.version}
+author: totemo
+authors: []
+description: ${project.description}
+website: ${project.url}
+main: nu.nerd.nerdpoints.NerdPoints
+api-version: 1.13
+
+permissions:
+  nerdpoints.console:
+    description: Permission to administer the plugin.
+    default: op
+    
+  nerdpoints.user:
+    description: Permission to use commands for ordinary players.
+    default: true
+
+commands:
+  nerdpoints-reload:
+    description: ${project.name} administrative command.
+    permission: nerdpoints.console
+    usage: |
+
+      §e/<command>§f - Reload the configuration.
+
+  hud:
+    description: Control the Head-Up Display (HUD).
+    permission: nerdpoints.user
+    usage: |
+
+      §e/<command> help§f - Show this help. Equivalent to §e/help /hud§f.  
+      §e/<command> [on|off]§f - Turn on/off the HUD. If no argument is
+      specified, the HUD state is toggled.
+      §e/<command> format [<format>]§f - Show the string that defines the
+      layout of the HUD. If the <format> argument is specified, set a
+      new format.
+      §e/<command> biome format [<format>]§f - Set or show the string that
+      defines the %biome% value shown by the HUD.
+      §e/<command> chunk format [<format>]§f - Set or show the string that
+      defines the %chunk% value shown by the HUD.
+      §e/<command> compass format [<format>]§f - Set or show the string that
+      defines the %compass% value shown by the HUD.
+      §e/<command> coords format [<format>]§f - Set or show the string that
+      defines the %coords% value shown by the HUD.
+      §e/<command> light format [<format>]§f - Set or show the string that
+      defines the %light% value shown by the HUD.
+      
+      For detailed documentation on format strings, see:
+      §bhttps://github.com/NerdNu/NerdPoints#hud-formatting§f

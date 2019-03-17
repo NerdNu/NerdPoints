@@ -48,7 +48,7 @@ layout of the HUD with the `/hud format` command:
 | `%coords%` | The player's coordinates, formatted according to `/hud coords format`. |
 | `%light%` | The light level at the player's coordinates, formatted according to `/hud light format`. |
 
-The default setting is: `%coords% %compass%`
+The default setting is: `%chunk% %light% %biome% %coords% %compass%`
 
 Example: `/hud format &4%biome% &f%light% &6%chunk% &e%coords% &f%compass%`
 
@@ -77,7 +77,7 @@ format of the HUD with the `/hud chunk format` command:
 | `%cx%`, `%cy%`, `%cz%` | The chunk's X, Y or Z coordinate (player coordinate divided by 16). | -123 |
 | `%x%`, `%y%`, `%z%` | The player's X, Y or Z coordinate, within the chunk, modulo 16 (range 0-15). | 15 |
 
-The default setting is: `%x% %y% %z%`
+The default setting is: `C %x% %y% %z%`
 
 Example: `/hud chunk format %x% %y% %z% in %cx% %cy% %cz%`
 
@@ -124,6 +124,6 @@ format of the HUD with the `/hud light format` command:
 | `%blocklight%` | The light level from nearby blocks (0-15). | 15 |
 | `%light%`| The total light level at the player's location (0-15). | 15 |
 
-The default setting is: `%light%`
+The default setting is: `L %light%`
 
 Example: `/hud light format L %light% (S %skylight% B %blocklight%)`

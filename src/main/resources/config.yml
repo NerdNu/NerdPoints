@@ -1,0 +1,46 @@
+hud:
+  default:
+    hud-visible: false
+    biome-visible: false
+    chunk-visible: false
+    compass-visible: true
+    coords-visible: true
+    light-visible: false
+
+    # Overall HUD format, including chat colour codes.
+    hud-format: '%chunk% %light% %biome% %coords% %compass%'
+    biome-format: '%biome%'
+    chunk-format: 'C %x% %y% %z%'
+    compass-format: '%octant%'
+    coords-format: '%x% %y% %z%'
+    light-format: 'L %light%'
+
+  # Renames to be applied to biomes before display.
+  # * Keys are Bukkit API Biome enum constants (case insensitive).
+  # * Values are displayed biome name.
+  # By default, Bukkit Biome constants are converted to lower case and underscores
+  # replaced with spaces.
+  biome-names: {}
+
+  # When the player interacts with any of the specified materials, HUD updates
+  # are suspended for the specified number of milliseconds.
+  suspend:
+    millis: 3000
+    materials:
+    - JUKEBOX
+    - RED_BED
+    - ORANGE_BED
+    - YELLOW_BED
+    - LIME_BED
+    - GREEN_BED
+    - CYAN_BED
+    - BLUE_BED
+    - LIGHT_BLUE_BED
+    - PURPLE_BED
+    - MAGENTA_BED
+    - PINK_BED
+    - BROWN_BED
+    - WHITE_BED
+    - LIGHT_GRAY_BED
+    - GRAY_BED
+    - BLACK_BED
