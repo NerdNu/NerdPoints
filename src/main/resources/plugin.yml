@@ -12,8 +12,8 @@ permissions:
     description: Permission to administer the plugin.
     default: op
     
-  nerdpoints.user:
-    description: Permission to use commands for ordinary players.
+  nerdpoints.hud:
+    description: Permission to use /hud.
     default: true
 
 commands:
@@ -26,7 +26,7 @@ commands:
 
   hud:
     description: Control the Head-Up Display (HUD).
-    permission: nerdpoints.user
+    permission: nerdpoints.hud
     usage: |
 
       §e/<command> help§f - Show this help. Equivalent to §e/help /hud§f.  
@@ -35,14 +35,19 @@ commands:
       §e/<command> format [<format>]§f - Show the string that defines the
       layout of the HUD. If the <format> argument is specified, set a
       new format.
+      §e/<command> biome [on|off]§f - Turn on/off the biome display.
       §e/<command> biome format [<format>]§f - Set or show the string that
       defines the %biome% value shown by the HUD.
+      §e/<command> chunk [on|off]§f - Turn on/off the chunk display.
       §e/<command> chunk format [<format>]§f - Set or show the string that
       defines the %chunk% value shown by the HUD.
+      §e/<command> compass [on|off]§f - Turn on/off the compass display.
       §e/<command> compass format [<format>]§f - Set or show the string that
       defines the %compass% value shown by the HUD.
+      §e/<command> coords [on|off]§f - Turn on/off the coords display.
       §e/<command> coords format [<format>]§f - Set or show the string that
       defines the %coords% value shown by the HUD.
+      §e/<command> light [on|off]§f - Turn on/off the light display.
       §e/<command> light format [<format>]§f - Set or show the string that
       defines the %light% value shown by the HUD.
       
