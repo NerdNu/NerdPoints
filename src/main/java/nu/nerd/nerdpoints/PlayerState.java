@@ -255,36 +255,41 @@ public class PlayerState {
      * @param biome the biome whose name will be returned.
      * @return the name of a biome as displayed to the player.
      */
-    protected static String formatBiome(Biome biome) {
+    protected String formatBiome(Biome biome) {
+        HashMap<String, String> variables = new HashMap<>();
         String name = NerdPoints.CONFIG.HUD_BIOME_NAMES.get(biome);
         if (name == null) {
             name = biome.name().toLowerCase().replace('_', ' ');
         }
-        return name;
+        variables.put("biome", name);
+        return Util.replace(biomeFormat.get(), variables);
     }
 
     // ------------------------------------------------------------------------
     /**
-     * Return the formatted value of %coords%, without replacing colours.
+     * Return the formatted value of %chunk%, without replacing colours.
      * 
      * @param loc the player's current location.
-     * @return the formatted value of %coords%, without replacing colours.
+     * @return the formatted value of %chunk%, without replacing colours.
      */
     protected String formatChunk(Location loc) {
         HashMap<String, String> variables = new HashMap<>();
-        int cx = loc.getBlockX() / 16;
-        int cy = loc.getBlockY() / 16;
-        int cz = loc.getBlockZ() / 16;
-        int x = loc.getBlockX();
-        int y = loc.getBlockY();
-        int z = loc.getBlockZ();
-        variables.put("cx", String.format("%d", cx));
-        variables.put("cy", String.format("%d", cy));
-        variables.put("cz", String.format("%d", cz));
-        variables.put("x", String.format("%d", x - cx));
-        variables.put("y", String.format("%d", y - cy));
-        variables.put("z", String.format("%d", z - cz));
-        return Util.replace(coordsFormat.get(), variables);
+        int bx = loc.getBlockX();
+        int by = loc.getBlockY();
+        int bz = loc.getBlockZ();
+        int x = (bx % 16 + 16) % 16;
+        int y = (by % 16 + 16) % 16;
+        int z = (bz % 16 + 16) % 16;
+        int cx = (bx - x) / 16;
+        int cy = (by - y) / 16;
+        int cz = (bz - z) / 16;
+        variables.put("cx", String.format("%4d", cx));
+        variables.put("cy", String.format("%2d", cy));
+        variables.put("cz", String.format("%4d", cz));
+        variables.put("x", String.format("%2d", x));
+        variables.put("y", String.format("%2d", y));
+        variables.put("z", String.format("%2d", z));
+        return Util.replace(chunkFormat.get(), variables);
     }
 
     // ------------------------------------------------------------------------
