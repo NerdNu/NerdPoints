@@ -2,7 +2,7 @@
 A Bukkit plugin supporting waypoints, places of interest and a navigation HUD.
 
 Waypoints and places are not yet implemented. Those features will be implemented
-for PvE (`p.nerd.nu`) rev 24.
+on time for PvE (`p.nerd.nu`) rev 24.
 
 ## Head Up Display (HUD) Commands
 
@@ -28,11 +28,11 @@ for PvE (`p.nerd.nu`) rev 24.
 The layout of the HUD is controlled by various per-player settings. All format
 settings can contain two character Minecraft colour code sequences beginning
 with '&', followed by 0-9, a-f, k-o or r. See the Minecraft wiki article on
-[https://minecraft.gamepedia.com/Formatting_codes#Color_codes Colour Codes].
+[Colour Codes](https://minecraft.gamepedia.com/Formatting_codes#Color_codes).
 
 Format settings can also contain variables whose name begins and ends with the
 percent symbol, e.g. `%x%`. Variables are defined within a context. The player's
-current X coordinate, `%x%`, can be referenced when configuring the coords
+current X coordinate, `%x%`, can be referenced when configuring the coordinate
 format of the HUD, but not the light level format, for example.
 
 ### Overall HUD Format
