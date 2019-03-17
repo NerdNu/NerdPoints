@@ -11,16 +11,33 @@ on time for PvE (`p.nerd.nu`) rev 24.
   HUD state is toggled.
 * `/hud format [<format>]` - Show the string that defines the layout of the
   HUD. If the `<format>` argument is specified, set a new format.
+* `/hud biome [on|off]` - Turn on/off the biome display.
 * `/hud biome format [<format>]` - Set or show the string that defines the
   `%biome%` value shown by the HUD.
+* `/hud chunk [on|off]` - Turn on/off the chunk display.
 * `/hud chunk format [<format>]` - Set or show the string that
   defines the `%chunk%` value shown by the HUD.
+* `/hud compass [on|off]` - Turn on/off the compass display.
 * `/hud compass format [<format>]` - Set or show the string that
   defines the `%compass%` value shown by the HUD.
+* `/hud coords [on|off]` - Turn on/off the coords display.
 * `/hud coords format [<format>]` - Set or show the string that
   defines the `%coords%` value shown by the HUD.
+* `/hud light [on|off]` - Turn on/off the light display.
 * `/hud light format [<format>]` - Set or show the string that
   defines the `%light%` value shown by the HUD.
+
+
+## HUD Visibility
+
+By default, the HUD is disabled for new players. To turn on the HUD, you
+can run `/hud on`, or toggle it on or off with `/hud`.
+
+Individual parts of the HUD can be turned on and off. By default, only the
+coordinates and compass sections of the HUD are enabled. You can use
+`/hud biome` to toggle on/off the biome section of the HUD display (note
+that the HUD must also be visible overall to see the biome section). You can
+also explicitly specify the visibility of a section, e.g. `/hud light on`.
 
 
 ## HUD Formatting
@@ -48,7 +65,7 @@ layout of the HUD with the `/hud format` command:
 | `%coords%` | The player's coordinates, formatted according to `/hud coords format`. |
 | `%light%` | The light level at the player's coordinates, formatted according to `/hud light format`. |
 
-The default setting is: `%chunk% %light% %biome% %coords% %compass%`
+The default setting is: `%chunk%  %light%  %biome%  %coords%  %compass%`
 
 Example: `/hud format &4%biome% &f%light% &6%chunk% &e%coords% &f%compass%`
 
@@ -62,9 +79,9 @@ format of the HUD with the `/hud biome format` command:
 | :---     | :---        | :---    |
 | `%biome%` | The player's current biome in lower case letters. | plains |
 
-The default setting is: `%biome%`
+The default setting is: `&6%biome%`
 
-Example: `/hud biome format &4%biome%`
+Example: `/hud biome format &eIn: %biome%`
 
 
 ### Chunk Format Variables
@@ -93,9 +110,9 @@ format of the HUD with the `/hud compass format` command:
 | `%heading%` | The player's heading angle (0 - 359), rounded to the nearest whole number. | 123 |
 | `%heading.%`| The player's heading angle (0.0 - 359.9), rounded to one decimal place. | 69.4 |
 
-The default setting is: `%octant%`
+The default setting is: `&e%octant%`
 
-Example: `/hud compass format %octant% %heading.%`
+Example: `/hud compass format &e%octant% %heading.%`
 
 
 ### Coordinates Format Variables
@@ -108,9 +125,9 @@ format of the HUD with the `/hud coords format` command:
 | `%x%`, `%y%`, `%z%` | The player's X, Y or Z coordinate, truncated to a whole number. | -1234 |
 | `%x.%`, `%y.%`, `%z.%` | The player's X, Y or Z coordinate, rounded to one decimal place. | -12345 |
 
-The default setting is: `%x% %y% %z%`
+The default setting is: `&7X &f%x% &7Y &f%y% &7Z &f%z%`
 
-Example: `/hud coords format &8X &f%x% &8Y &f%y% &8Z &f%z%`
+Example: `/hud coords format %x.% %y.% %z.%`
 
 
 ### Light Format Variables
@@ -124,6 +141,6 @@ format of the HUD with the `/hud light format` command:
 | `%blocklight%` | The light level from nearby blocks (0-15). | 15 |
 | `%light%`| The total light level at the player's location (0-15). | 15 |
 
-The default setting is: `L %light%`
+The default setting is: `&6L %light% &f(&7B %blocklight% &bS %skylight%&f)`
 
-Example: `/hud light format L %light% (S %skylight% B %blocklight%)`
+Example: `/hud light format &6L %light%`
