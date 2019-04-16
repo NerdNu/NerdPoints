@@ -123,7 +123,7 @@ format of the HUD with the `/hud coords format` command:
 | Variable | Description | Example |
 | :---     | :---        | :---    |
 | `%x%`, `%y%`, `%z%` | The player's X, Y or Z coordinate, truncated to a whole number. | -1234 |
-| `%x.%`, `%y.%`, `%z.%` | The player's X, Y or Z coordinate, rounded to one decimal place. | -12345 |
+| `%x.%`, `%y.%`, `%z.%` | The player's X, Y or Z coordinate, rounded to one decimal place. | -1234.5 |
 
 The default setting is: `&7X &f%x% &7Y &f%y% &7Z &f%z%`
 
