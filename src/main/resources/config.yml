@@ -1,4 +1,9 @@
 hud:
+  update:
+    ticks: 2
+    parallel: true
+    timeout-ms: 3
+  
   default:
     hud-visible: false
     biome-visible: false

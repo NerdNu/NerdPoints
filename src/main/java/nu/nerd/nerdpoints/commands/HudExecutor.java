@@ -7,9 +7,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import nu.nerd.nerdpoints.FormatSetting;
 import nu.nerd.nerdpoints.NerdPoints;
 import nu.nerd.nerdpoints.PlayerSetting;
 import nu.nerd.nerdpoints.PlayerState;
+import nu.nerd.nerdpoints.format.Format;
 
 // ----------------------------------------------------------------------------
 /**
@@ -105,7 +107,7 @@ public class HudExecutor extends ExecutorBase {
                                 String description,
                                 String toggleSuffix,
                                 PlayerSetting<Boolean> visibilitySetting,
-                                PlayerSetting<String> formatSetting,
+                                FormatSetting formatSetting,
                                 String... args) {
         if (args.length == 0) {
             visibilitySetting.set(!visibilitySetting.get());
@@ -127,7 +129,7 @@ public class HudExecutor extends ExecutorBase {
             }
         } else if (args.length > 1 && args[0].equalsIgnoreCase("format")) {
             sender.sendMessage(ChatColor.GOLD + description + " old format: " + formatSetting.get());
-            formatSetting.set(String.join(" ", Arrays.copyOfRange(args, 1, args.length)));
+            formatSetting.set(new Format(String.join(" ", Arrays.copyOfRange(args, 1, args.length))));
             sender.sendMessage(ChatColor.GOLD + description + " new format: " + formatSetting.get());
             return;
         }

@@ -11,6 +11,8 @@ import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import nu.nerd.nerdpoints.format.Format;
+
 // ----------------------------------------------------------------------------
 /**
  * Manages configuration settings.
@@ -20,6 +22,23 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class Configuration {
     // ------------------------------------------------------------------------
+    /**
+     * Update period of the HUD in ticks.
+     */
+    public int HUD_UPDATE_TICKS;
+
+    /**
+     * If true, update player HUDS in parallel, off the main thread as much as
+     * possible.
+     */
+    public boolean HUD_UPDATE_PARALLEL;
+
+    /**
+     * When updating in parallel, give up if taking longer than this number of
+     * milliseconds.
+     */
+    public int HUD_UPDATE_TIMEOUT_MS;
+
     /**
      * Default HUD visibility.
      */
@@ -53,32 +72,32 @@ public class Configuration {
     /**
      * Default HUD format, with &X colour codes and %var% variables.
      */
-    public String HUD_DEFAULT_HUD_FORMAT;
+    public Format HUD_DEFAULT_HUD_FORMAT;
 
     /**
      * Default format of %biome%.
      */
-    public String HUD_DEFAULT_BIOME_FORMAT;
+    public Format HUD_DEFAULT_BIOME_FORMAT;
 
     /**
      * Default format of %chunk%.
      */
-    public String HUD_DEFAULT_CHUNK_FORMAT;
+    public Format HUD_DEFAULT_CHUNK_FORMAT;
 
     /**
      * Default format of %compass%.
      */
-    public String HUD_DEFAULT_COMPASS_FORMAT;
+    public Format HUD_DEFAULT_COMPASS_FORMAT;
 
     /**
      * Default format of %coords%.
      */
-    public String HUD_DEFAULT_COORDS_FORMAT;
+    public Format HUD_DEFAULT_COORDS_FORMAT;
 
     /**
      * Default format of %light%.
      */
-    public String HUD_DEFAULT_LIGHT_FORMAT;
+    public Format HUD_DEFAULT_LIGHT_FORMAT;
 
     /**
      * Overridden biome names.
@@ -117,6 +136,10 @@ public class Configuration {
         FileConfiguration config = NerdPoints.PLUGIN.getConfig();
         Logger logger = NerdPoints.PLUGIN.getLogger();
 
+        HUD_UPDATE_TICKS = config.getInt("hud.update.ticks");
+        HUD_UPDATE_PARALLEL = config.getBoolean("hud.update.parallel");
+        HUD_UPDATE_TIMEOUT_MS = config.getInt("hud.update.timeout-ms");
+
         HUD_DEFAULT_HUD_VISIBLE = config.getBoolean("hud.default.hud-visible");
         HUD_DEFAULT_BIOME_VISIBLE = config.getBoolean("hud.default.biome-visible");
         HUD_DEFAULT_CHUNK_VISIBLE = config.getBoolean("hud.default.chunk-visible");
@@ -124,12 +147,12 @@ public class Configuration {
         HUD_DEFAULT_COORDS_VISIBLE = config.getBoolean("hud.default.coords-visible");
         HUD_DEFAULT_LIGHT_VISIBLE = config.getBoolean("hud.default.light-visible");
 
-        HUD_DEFAULT_HUD_FORMAT = config.getString("hud.default.hud-format");
-        HUD_DEFAULT_BIOME_FORMAT = config.getString("hud.default.biome-format");
-        HUD_DEFAULT_CHUNK_FORMAT = config.getString("hud.default.chunk-format");
-        HUD_DEFAULT_COMPASS_FORMAT = config.getString("hud.default.compass-format");
-        HUD_DEFAULT_COORDS_FORMAT = config.getString("hud.default.coords-format");
-        HUD_DEFAULT_LIGHT_FORMAT = config.getString("hud.default.light-format");
+        HUD_DEFAULT_HUD_FORMAT = new Format(config.getString("hud.default.hud-format"));
+        HUD_DEFAULT_BIOME_FORMAT = new Format(config.getString("hud.default.biome-format"));
+        HUD_DEFAULT_CHUNK_FORMAT = new Format(config.getString("hud.default.chunk-format"));
+        HUD_DEFAULT_COMPASS_FORMAT = new Format(config.getString("hud.default.compass-format"));
+        HUD_DEFAULT_COORDS_FORMAT = new Format(config.getString("hud.default.coords-format"));
+        HUD_DEFAULT_LIGHT_FORMAT = new Format(config.getString("hud.default.light-format"));
 
         HUD_BIOME_NAMES.clear();
         ConfigurationSection biomeNames = config.getConfigurationSection("hud.biome-names");
@@ -155,6 +178,9 @@ public class Configuration {
 
         if (logged) {
             logger.info("Configuration:");
+            logger.info("HUD_UPDATE_TICKS: " + HUD_UPDATE_TICKS);
+            logger.info("HUD_UPDATE_PARALLEL: " + HUD_UPDATE_PARALLEL);
+            logger.info("HUD_UPDATE_TIMEOUT_MS: " + HUD_UPDATE_TIMEOUT_MS);
             logger.info("HUD_DEFAULT_HUD_VISIBLE: " + HUD_DEFAULT_HUD_VISIBLE);
             logger.info("HUD_DEFAULT_BIOME_VISIBLE: " + HUD_DEFAULT_BIOME_VISIBLE);
             logger.info("HUD_DEFAULT_CHUNK_VISIBLE: " + HUD_DEFAULT_CHUNK_VISIBLE);

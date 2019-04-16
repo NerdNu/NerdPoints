@@ -96,7 +96,7 @@ public class PlayerSetting<T> {
     /**
      * Key to store setting in YAML.
      */
-    private final String _key;
+    protected final String _key;
 
     /**
      * A function that supplies the default value.
@@ -106,5 +106,5 @@ public class PlayerSetting<T> {
     /**
      * Setting value, or null if the setting matches the plugin default.
      */
-    private T _value;
+    protected T _value;
 } // class PlayerSetting

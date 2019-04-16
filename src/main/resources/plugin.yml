@@ -17,12 +17,13 @@ permissions:
     default: true
 
 commands:
-  nerdpoints-reload:
+  nerdpoints:
     description: ${project.name} administrative command.
     permission: nerdpoints.console
     usage: |
 
-      §e/<command>§f - Reload the configuration.
+      §e/<command> help§f - Show this help. Equivalent to §e/help /nerdpoints§f.  
+      §e/<command> reload§f - Reload the configuration.
 
   hud:
     description: Control the Head-Up Display (HUD).
