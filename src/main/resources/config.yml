@@ -11,14 +11,16 @@ hud:
     compass-visible: true
     coords-visible: true
     light-visible: false
+    time-visible: false
 
     # Overall HUD format, including chat colour codes.
-    hud-format: '%chunk%  %light%  %biome%  %coords%  %compass%'
+    hud-format: '%chunk%  %light%  %biome%  %time%  %coords%  %compass%'
     biome-format: '&6%biome%'
     chunk-format: 'C %x% %y% %z%'
     compass-format: '&e%octant%'
     coords-format: '&7X &f%x% &7Y &f%y% &7Z &f%z%'
     light-format: '&6L %light% &f(&7B %blocklight% &bS %skylight%&f)'
+    time-format: '%h%:%mm% %ampm% %orb%&6%updown%&f'
 
   # Renames to be applied to biomes before display.
   # * Keys are Bukkit API Biome enum constants (case insensitive).

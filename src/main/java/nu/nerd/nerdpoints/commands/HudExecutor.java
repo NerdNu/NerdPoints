@@ -23,7 +23,7 @@ public class HudExecutor extends ExecutorBase {
      * Default constructor.
      */
     public HudExecutor() {
-        super("hud", "help", "on", "off", "format", "biome", "chunk", "compass", "coords", "light");
+        super("hud", "help", "on", "off", "format", "biome", "chunk", "compass", "coords", "light", "time");
     }
 
     // ------------------------------------------------------------------------
@@ -80,6 +80,11 @@ public class HudExecutor extends ExecutorBase {
             } else if (args[0].equalsIgnoreCase("light")) {
                 onHudCommand(sender, "Light HUD section", "",
                              state.lightVisible, state.lightFormat,
+                             Arrays.copyOfRange(args, 1, args.length));
+                return true;
+            } else if (args[0].equalsIgnoreCase("time")) {
+                onHudCommand(sender, "Time HUD section", "",
+                             state.timeVisible, state.timeFormat,
                              Arrays.copyOfRange(args, 1, args.length));
                 return true;
             }

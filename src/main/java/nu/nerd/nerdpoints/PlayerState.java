@@ -59,6 +59,11 @@ public class PlayerState {
     public final PlayerSetting<Boolean> lightVisible;
 
     /**
+     * The visibility of the time section of the HUD.
+     */
+    public final PlayerSetting<Boolean> timeVisible;
+
+    /**
      * The format string used by this player to lay out their HUD.
      */
     public final FormatSetting hudFormat;
@@ -93,6 +98,12 @@ public class PlayerState {
      */
     public final FormatSetting lightFormat;
 
+    /**
+     * The format string that defines the value of %time% used in the HUD
+     * layout.
+     */
+    public final FormatSetting timeFormat;
+
     // ------------------------------------------------------------------------
     /**
      * Constructor.
@@ -108,6 +119,7 @@ public class PlayerState {
         compassVisible = new PlayerSetting<>("compass-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_COMPASS_VISIBLE);
         coordsVisible = new PlayerSetting<>("coords-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_COORDS_VISIBLE);
         lightVisible = new PlayerSetting<>("light-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_LIGHT_VISIBLE);
+        timeVisible = new PlayerSetting<>("time-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_TIME_VISIBLE);
 
         hudFormat = new FormatSetting("hud-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_HUD_FORMAT);
         biomeFormat = new FormatSetting("biome-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_BIOME_FORMAT);
@@ -115,6 +127,7 @@ public class PlayerState {
         compassFormat = new FormatSetting("compass-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_COMPASS_FORMAT);
         coordsFormat = new FormatSetting("coords-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_COORDS_FORMAT);
         lightFormat = new FormatSetting("light-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_LIGHT_FORMAT);
+        timeFormat = new FormatSetting("time-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_TIME_FORMAT);
 
         load();
 
@@ -178,6 +191,58 @@ public class PlayerState {
                         new TextSupplier<Integer>(
                             () -> (_block != null) ? (int) _block.getLightFromBlocks() : 0,
                             i -> String.format("%2d", i)));
+
+        // Set up the time Scope. A Minecraft day is 24000 ticks, an hour 1000.
+        _timeScope.set("ampm",
+                       new TextSupplier<String>(
+                           () -> ((_fullTime + TIME_OFFSET) % 24000 < 12000) ? "a.m." : "p.m.",
+                           s -> String.format("%s", s)));
+        _timeScope.set("AMPM",
+                       new TextSupplier<String>(
+                           () -> ((_fullTime + TIME_OFFSET) % 24000 < 12000) ? "A.M." : "P.M.",
+                           s -> String.format("%s", s)));
+        _timeScope.set("h",
+                       new TextSupplier<Long>(
+                           () -> ((_fullTime + TIME_OFFSET) / 1000 + 11) % 12 + 1,
+                           i -> String.format("%2d", i)));
+        _timeScope.set("hh",
+                       new TextSupplier<Long>(
+                           () -> ((_fullTime + TIME_OFFSET) / 1000 + 11) % 12 + 1,
+                           i -> String.format("%02d", i)));
+        _timeScope.set("H",
+                       new TextSupplier<Long>(
+                           () -> ((_fullTime + TIME_OFFSET) / 1000) % 24,
+                           i -> String.format("%2d", i)));
+        _timeScope.set("HH",
+                       new TextSupplier<Long>(
+                           () -> ((_fullTime + TIME_OFFSET) / 1000) % 24,
+                           i -> String.format("%02d", i)));
+        _timeScope.set("mm",
+                       new TextSupplier<Long>(
+                           () -> ((_fullTime + TIME_OFFSET) % 1000) * 60 / 1000 % 60,
+                           i -> String.format("%02d", i)));
+        _timeScope.set("orb",
+                       new TextSupplier<String>(
+                           () -> {
+                               long time = (_fullTime % 24000);
+                               return (time >= TIME_SUNRISE || time < TIME_MOONRISE) ? "☼" : "☾";
+                           },
+                           s -> String.format("%s", s)));
+        _timeScope.set("updown",
+                       new TextSupplier<String>(
+                           () -> {
+                               long time = (_fullTime % 24000);
+                               if ((time >= TIME_SUNRISE || time < TIME_DAY) ||
+                                   (time >= TIME_MOONRISE && time < TIME_NIGHT)) {
+                                   return "↑";
+                               } else if ((time >= TIME_SUNSET && time < TIME_MOONRISE) ||
+                                          (time >= TIME_MOONSET && time < TIME_SUNRISE)) {
+                                   return "↓";
+                               } else {
+                                   return " ";
+                               }
+                           },
+                           s -> String.format("%s", s)));
     }
 
     // --------------------------------------------------------------------------
@@ -224,6 +289,7 @@ public class PlayerState {
         if (isShowingHUD()) {
             _location = _player.getLocation();
             _block = _location.getBlock();
+            _fullTime = _location.getWorld().getFullTime();
         }
     }
 
@@ -242,6 +308,7 @@ public class PlayerState {
         _hudScope.setText("compass", compassVisible.get() ? compassFormat.get().expand(_compassScope) : "");
         _hudScope.setText("coords", coordsVisible.get() ? coordsFormat.get().expand(_coordsScope) : "");
         _hudScope.setText("light", lightVisible.get() ? lightFormat.get().expand(_lightScope) : "");
+        _hudScope.setText("time", timeVisible.get() ? timeFormat.get().expand(_timeScope) : "");
 
         String uncoloured = hudFormat.get().expand(_hudScope);
         String message = ChatColor.translateAlternateColorCodes('&', uncoloured);
@@ -262,12 +329,14 @@ public class PlayerState {
                compassVisible.isDefault() &&
                coordsVisible.isDefault() &&
                lightVisible.isDefault() &&
+               timeVisible.isDefault() &&
                hudFormat.isDefault() &&
                biomeFormat.isDefault() &&
                chunkFormat.isDefault() &&
                compassFormat.isDefault() &&
                coordsFormat.isDefault() &&
-               lightFormat.isDefault();
+               lightFormat.isDefault() &&
+               timeFormat.isDefault();
     }
 
     // ------------------------------------------------------------------------
@@ -305,6 +374,7 @@ public class PlayerState {
         compassVisible.save(section);
         coordsVisible.save(section);
         lightVisible.save(section);
+        timeVisible.save(section);
 
         hudFormat.save(section);
         biomeFormat.save(section);
@@ -312,6 +382,7 @@ public class PlayerState {
         compassFormat.save(section);
         coordsFormat.save(section);
         lightFormat.save(section);
+        timeFormat.save(section);
     }
 
     // ------------------------------------------------------------------------
@@ -338,6 +409,7 @@ public class PlayerState {
         compassVisible.load(section);
         coordsVisible.load(section);
         lightVisible.load(section);
+        timeVisible.load(section);
 
         hudFormat.load(section);
         biomeFormat.load(section);
@@ -345,6 +417,7 @@ public class PlayerState {
         compassFormat.load(section);
         coordsFormat.load(section);
         lightFormat.load(section);
+        timeFormat.load(section);
     }
 
     // ------------------------------------------------------------------------
@@ -353,6 +426,48 @@ public class PlayerState {
      * sensitive to that.
      */
     static final int MAX_HUD_LENGTH = 128;
+
+    /**
+     * Number of ticks added to the world's full time to make it so that the
+     * resultant sum modulo 24000 is the current (24 hour clock) hour times
+     * 1000.
+     */
+    static final long TIME_OFFSET = 6000;
+
+    /**
+     * Start of sunset. (17:37)
+     *
+     * The cycle is TIME_MOONSET -> TIME_SUNRISE -> TIME_DAY -> TIME_SUNSET ->
+     * TIME_MOONRISE -> TIME_NIGHT.
+     *
+     * Times from https://minecraft.gamepedia.com/Day-night_cycle.
+     */
+    static final long TIME_SUNSET = 11617;
+
+    /**
+     * Time at which beds become usable. Wiki inaccurate. (18:33, empirically)
+     */
+    static final long TIME_MOONRISE = 12550;
+
+    /**
+     * First tick when monsters spawn outdoors, in clear weather. (19:11)
+     */
+    static final long TIME_NIGHT = 13183;
+
+    /**
+     * Time at which the moon begins setting (not on wiki, arbitrarily 03:30)
+     */
+    static final long TIME_MOONSET = 21500;
+
+    /**
+     * Sunrise begins. The horizon starts to brighten. (04:33)
+     */
+    static final long TIME_SUNRISE = 22550;
+
+    /**
+     * Time when sunrise ends. (06:27)
+     */
+    static final long TIME_DAY = 450;
 
     /**
      * The 8 compass directions shown when formatting %octant%.
@@ -373,6 +488,11 @@ public class PlayerState {
      * Most recent block at _location.
      */
     protected Block _block;
+
+    /**
+     * Full time (ticks) in the player's current world.
+     */
+    protected long _fullTime;
 
     /**
      * Scope containing HUD variables.
@@ -403,6 +523,11 @@ public class PlayerState {
      * Scope containing light variables.
      */
     protected Scope _lightScope = new Scope();
+
+    /**
+     * Scope containing time variables.
+     */
+    protected Scope _timeScope = new Scope();
 
     /**
      * The time at which suspendHUD() was called.

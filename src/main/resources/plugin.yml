@@ -51,6 +51,9 @@ commands:
       §e/<command> light [on|off]§f - Turn on/off the light display.
       §e/<command> light format [<format>]§f - Set or show the string that
       defines the %light% value shown by the HUD.
+      §e/<command> time [on|off]§f - Turn on/off the time display.
+      §e/<command> time format [<format>]§f - Set or show the string that
+      defines the %time% value shown by the HUD.
       
       For detailed documentation on format strings, see:
       §bhttps://github.com/NerdNu/NerdPoints#hud-formatting§f

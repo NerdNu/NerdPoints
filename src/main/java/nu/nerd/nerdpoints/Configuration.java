@@ -70,6 +70,11 @@ public class Configuration {
     public boolean HUD_DEFAULT_LIGHT_VISIBLE;
 
     /**
+     * Default time visibility within the HUD.
+     */
+    public boolean HUD_DEFAULT_TIME_VISIBLE;
+
+    /**
      * Default HUD format, with &X colour codes and %var% variables.
      */
     public Format HUD_DEFAULT_HUD_FORMAT;
@@ -98,6 +103,11 @@ public class Configuration {
      * Default format of %light%.
      */
     public Format HUD_DEFAULT_LIGHT_FORMAT;
+
+    /**
+     * Default format of %time%.
+     */
+    public Format HUD_DEFAULT_TIME_FORMAT;
 
     /**
      * Overridden biome names.
@@ -146,6 +156,7 @@ public class Configuration {
         HUD_DEFAULT_COMPASS_VISIBLE = config.getBoolean("hud.default.compass-visible");
         HUD_DEFAULT_COORDS_VISIBLE = config.getBoolean("hud.default.coords-visible");
         HUD_DEFAULT_LIGHT_VISIBLE = config.getBoolean("hud.default.light-visible");
+        HUD_DEFAULT_TIME_VISIBLE = config.getBoolean("hud.default.time-visible");
 
         HUD_DEFAULT_HUD_FORMAT = new Format(config.getString("hud.default.hud-format"));
         HUD_DEFAULT_BIOME_FORMAT = new Format(config.getString("hud.default.biome-format"));
@@ -153,6 +164,7 @@ public class Configuration {
         HUD_DEFAULT_COMPASS_FORMAT = new Format(config.getString("hud.default.compass-format"));
         HUD_DEFAULT_COORDS_FORMAT = new Format(config.getString("hud.default.coords-format"));
         HUD_DEFAULT_LIGHT_FORMAT = new Format(config.getString("hud.default.light-format"));
+        HUD_DEFAULT_TIME_FORMAT = new Format(config.getString("hud.default.time-format"));
 
         HUD_BIOME_NAMES.clear();
         ConfigurationSection biomeNames = config.getConfigurationSection("hud.biome-names");
@@ -187,6 +199,7 @@ public class Configuration {
             logger.info("HUD_DEFAULT_COMPASS_VISIBLE: " + HUD_DEFAULT_COMPASS_VISIBLE);
             logger.info("HUD_DEFAULT_COORDS_VISIBLE: " + HUD_DEFAULT_COORDS_VISIBLE);
             logger.info("HUD_DEFAULT_LIGHT_VISIBLE: " + HUD_DEFAULT_LIGHT_VISIBLE);
+            logger.info("HUD_DEFAULT_TIME_VISIBLE: " + HUD_DEFAULT_TIME_VISIBLE);
 
             logger.info("HUD_DEFAULT_HUD_FORMAT: " + HUD_DEFAULT_HUD_FORMAT);
             logger.info("HUD_DEFAULT_BIOME_FORMAT: " + HUD_DEFAULT_BIOME_FORMAT);
@@ -194,6 +207,7 @@ public class Configuration {
             logger.info("HUD_DEFAULT_COMPASS_FORMAT: " + HUD_DEFAULT_COMPASS_FORMAT);
             logger.info("HUD_DEFAULT_COORDS_FORMAT: " + HUD_DEFAULT_COORDS_FORMAT);
             logger.info("HUD_DEFAULT_LIGHT_FORMAT: " + HUD_DEFAULT_LIGHT_FORMAT);
+            logger.info("HUD_DEFAULT_TIME_FORMAT: " + HUD_DEFAULT_TIME_FORMAT);
 
             logger.info("Biome names:");
             for (Entry<Biome, String> entry : HUD_BIOME_NAMES.entrySet()) {
