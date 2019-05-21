@@ -197,11 +197,11 @@ public class PlayerState {
         _timeScope.set("ampm",
                        new TextSupplier<String>(
                            () -> ((_fullTime + TIME_OFFSET) % 24000 < 12000) ? "a.m." : "p.m.",
-                           s -> String.format("%s", s)));
+                           s -> s));
         _timeScope.set("AMPM",
                        new TextSupplier<String>(
                            () -> ((_fullTime + TIME_OFFSET) % 24000 < 12000) ? "A.M." : "P.M.",
-                           s -> String.format("%s", s)));
+                           s -> s));
         _timeScope.set("h",
                        new TextSupplier<Long>(
                            () -> ((_fullTime + TIME_OFFSET) / 1000 + 11) % 12 + 1,
@@ -228,7 +228,7 @@ public class PlayerState {
                                long time = (_fullTime % 24000);
                                return (time >= TIME_SUNRISE || time < TIME_MOONRISE) ? "☼" : "☾";
                            },
-                           s -> String.format("%s", s)));
+                           s -> s));
         _timeScope.set("updown",
                        new TextSupplier<String>(
                            () -> {
@@ -243,7 +243,7 @@ public class PlayerState {
                                    return " ";
                                }
                            },
-                           s -> String.format("%s", s)));
+                           s -> s));
     }
 
     // --------------------------------------------------------------------------
