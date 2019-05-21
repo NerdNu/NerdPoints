@@ -32,28 +32,28 @@ commands:
 
       §e/<command> help§f - Show this help. Equivalent to §e/help /hud§f.  
       §e/<command> [on|off]§f - Turn on/off the HUD. If no argument is
-      specified, the HUD state is toggled.
-      §e/<command> format [<format>]§f - Show the string that defines the
-      layout of the HUD. If the <format> argument is specified, set a
-      new format.
+       specified, the HUD state is toggled.
+      §e/<command> format [default|<format>]§f - Show the string that defines
+       the layout of the HUD. If the <format> argument is specified,
+       set a new format. The word "default" signifies the default format.
       §e/<command> biome [on|off]§f - Turn on/off the biome display.
-      §e/<command> biome format [<format>]§f - Set or show the string that
-      defines the %biome% value shown by the HUD.
+      §e/<command> biome format [default|<format>]§f - Set or show the string
+       that defines the %biome% value shown by the HUD.
       §e/<command> chunk [on|off]§f - Turn on/off the chunk display.
-      §e/<command> chunk format [<format>]§f - Set or show the string that
-      defines the %chunk% value shown by the HUD.
+      §e/<command> chunk format [default|<format>]§f - Set or show the string
+       that defines the %chunk% value shown by the HUD.
       §e/<command> compass [on|off]§f - Turn on/off the compass display.
-      §e/<command> compass format [<format>]§f - Set or show the string that
-      defines the %compass% value shown by the HUD.
+      §e/<command> compass format [default|<format>]§f - Set or show the
+       string that defines the %compass% value shown by the HUD.
       §e/<command> coords [on|off]§f - Turn on/off the coords display.
-      §e/<command> coords format [<format>]§f - Set or show the string that
-      defines the %coords% value shown by the HUD.
+      §e/<command> coords format [default|<format>]§f - Set or show the
+       string that defines the %coords% value shown by the HUD.
       §e/<command> light [on|off]§f - Turn on/off the light display.
-      §e/<command> light format [<format>]§f - Set or show the string that
-      defines the %light% value shown by the HUD.
+      §e/<command> light format [default|<format>]§f - Set or show the string
+       that defines the %light% value shown by the HUD.
       §e/<command> time [on|off]§f - Turn on/off the time display.
-      §e/<command> time format [<format>]§f - Set or show the string that
-      defines the %time% value shown by the HUD.
+      §e/<command> time format [default|<format>]§f - Set or show the string
+       that defines the %time% value shown by the HUD.
       
       For detailed documentation on format strings, see:
       §bhttps://github.com/NerdNu/NerdPoints#hud-formatting§f

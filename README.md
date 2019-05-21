@@ -9,26 +9,39 @@ on time for PvE (`p.nerd.nu`) rev 24.
 * `/hud help` - Show this help. Equivalent to `/help /hud`.
 * `/hud [on|off]` - Turn on/off the HUD. If no argument is specified, the
   HUD state is toggled.
-* `/hud format [<format>]` - Show the string that defines the layout of the
-  HUD. If the `<format>` argument is specified, set a new format.
+* `/hud format [default | <format>]` - Show the string that defines the layout
+  of the HUD. If the `<format>` argument is specified, set a new format. The
+  word "default" signifies the default format.
+
 * `/hud biome [on|off]` - Turn on/off the biome display.
-* `/hud biome format [<format>]` - Set or show the string that defines the
-  `%biome%` value shown by the HUD.
+* `/hud biome format [default | <format>]` - Set or show the string that defines
+  the `%biome%` value shown by the HUD. The word "default" signifies the default
+  format.
+
 * `/hud chunk [on|off]` - Turn on/off the chunk display.
-* `/hud chunk format [<format>]` - Set or show the string that
-  defines the `%chunk%` value shown by the HUD.
+* `/hud chunk format [default | <format>]` - Set or show the string that
+  defines the `%chunk%` value shown by the HUD. The word "default" signifies the
+  default format.
+
 * `/hud compass [on|off]` - Turn on/off the compass display.
-* `/hud compass format [<format>]` - Set or show the string that
-  defines the `%compass%` value shown by the HUD.
+* `/hud compass format [default | <format>]` - Set or show the string that
+  defines the `%compass%` value shown by the HUD. The word "default" signifies
+  the default format.
+
 * `/hud coords [on|off]` - Turn on/off the coords display.
-* `/hud coords format [<format>]` - Set or show the string that
-  defines the `%coords%` value shown by the HUD.
+* `/hud coords format [default | <format>]` - Set or show the string that
+  defines the `%coords%` value shown by the HUD. The word "default" signifies
+  the default format.
+
 * `/hud light [on|off]` - Turn on/off the light display.
-* `/hud light format [<format>]` - Set or show the string that
-  defines the `%light%` value shown by the HUD.
+* `/hud light format [default | <format>]` - Set or show the string that
+  defines the `%light%` value shown by the HUD. The word "default" signifies the
+  default format.
+
 * `/hud time [on|off]` - Turn on/off the time display.
-* `/hud time format [<format>]` - Set or show the string that
-  defines the `%time%` value shown by the HUD.
+* `/hud time format [default | <format>]` - Set or show the string that
+  defines the `%time%` value shown by the HUD. The word "default" signifies the
+  default format.
 
 
 ## HUD Visibility
