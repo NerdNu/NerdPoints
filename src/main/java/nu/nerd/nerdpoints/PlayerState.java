@@ -2,6 +2,7 @@ package nu.nerd.nerdpoints;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -113,21 +114,21 @@ public class PlayerState {
     public PlayerState(Player player) {
         _player = player;
 
-        hudVisible = new PlayerSetting<>("hud-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_HUD_VISIBLE);
-        biomeVisible = new PlayerSetting<>("biome-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_BIOME_VISIBLE);
-        chunkVisible = new PlayerSetting<>("chunk-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_CHUNK_VISIBLE);
-        compassVisible = new PlayerSetting<>("compass-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_COMPASS_VISIBLE);
-        coordsVisible = new PlayerSetting<>("coords-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_COORDS_VISIBLE);
-        lightVisible = new PlayerSetting<>("light-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_LIGHT_VISIBLE);
-        timeVisible = new PlayerSetting<>("time-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_TIME_VISIBLE);
+        _settings.add(hudVisible = new PlayerSetting<>("hud-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_HUD_VISIBLE));
+        _settings.add(biomeVisible = new PlayerSetting<>("biome-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_BIOME_VISIBLE));
+        _settings.add(chunkVisible = new PlayerSetting<>("chunk-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_CHUNK_VISIBLE));
+        _settings.add(compassVisible = new PlayerSetting<>("compass-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_COMPASS_VISIBLE));
+        _settings.add(coordsVisible = new PlayerSetting<>("coords-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_COORDS_VISIBLE));
+        _settings.add(lightVisible = new PlayerSetting<>("light-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_LIGHT_VISIBLE));
+        _settings.add(timeVisible = new PlayerSetting<>("time-visible", () -> NerdPoints.CONFIG.HUD_DEFAULT_TIME_VISIBLE));
 
-        hudFormat = new FormatSetting("hud-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_HUD_FORMAT);
-        biomeFormat = new FormatSetting("biome-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_BIOME_FORMAT);
-        chunkFormat = new FormatSetting("chunk-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_CHUNK_FORMAT);
-        compassFormat = new FormatSetting("compass-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_COMPASS_FORMAT);
-        coordsFormat = new FormatSetting("coords-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_COORDS_FORMAT);
-        lightFormat = new FormatSetting("light-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_LIGHT_FORMAT);
-        timeFormat = new FormatSetting("time-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_TIME_FORMAT);
+        _settings.add(hudFormat = new FormatSetting("hud-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_HUD_FORMAT));
+        _settings.add(biomeFormat = new FormatSetting("biome-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_BIOME_FORMAT));
+        _settings.add(chunkFormat = new FormatSetting("chunk-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_CHUNK_FORMAT));
+        _settings.add(compassFormat = new FormatSetting("compass-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_COMPASS_FORMAT));
+        _settings.add(coordsFormat = new FormatSetting("coords-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_COORDS_FORMAT));
+        _settings.add(lightFormat = new FormatSetting("light-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_LIGHT_FORMAT));
+        _settings.add(timeFormat = new FormatSetting("time-format", () -> NerdPoints.CONFIG.HUD_DEFAULT_TIME_FORMAT));
 
         load();
 
@@ -323,20 +324,12 @@ public class PlayerState {
      * @return true if all the player's settings are defaults.
      */
     public boolean isDefault() {
-        return hudVisible.isDefault() &&
-               biomeVisible.isDefault() &&
-               chunkVisible.isDefault() &&
-               compassVisible.isDefault() &&
-               coordsVisible.isDefault() &&
-               lightVisible.isDefault() &&
-               timeVisible.isDefault() &&
-               hudFormat.isDefault() &&
-               biomeFormat.isDefault() &&
-               chunkFormat.isDefault() &&
-               compassFormat.isDefault() &&
-               coordsFormat.isDefault() &&
-               lightFormat.isDefault() &&
-               timeFormat.isDefault();
+        for (PlayerSetting<?> setting : _settings) {
+            if (!setting.isDefault()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // ------------------------------------------------------------------------
@@ -367,22 +360,7 @@ public class PlayerState {
      */
     public void save(ConfigurationSection section) {
         section.set("name", _player.getName());
-
-        hudVisible.save(section);
-        biomeVisible.save(section);
-        chunkVisible.save(section);
-        compassVisible.save(section);
-        coordsVisible.save(section);
-        lightVisible.save(section);
-        timeVisible.save(section);
-
-        hudFormat.save(section);
-        biomeFormat.save(section);
-        chunkFormat.save(section);
-        compassFormat.save(section);
-        coordsFormat.save(section);
-        lightFormat.save(section);
-        timeFormat.save(section);
+        _settings.forEach(s -> s.save(section));
     }
 
     // ------------------------------------------------------------------------
@@ -403,21 +381,7 @@ public class PlayerState {
      * @param section the configuration section.
      */
     public void load(ConfigurationSection section) {
-        hudVisible.load(section);
-        biomeVisible.load(section);
-        chunkVisible.load(section);
-        compassVisible.load(section);
-        coordsVisible.load(section);
-        lightVisible.load(section);
-        timeVisible.load(section);
-
-        hudFormat.load(section);
-        biomeFormat.load(section);
-        chunkFormat.load(section);
-        compassFormat.load(section);
-        coordsFormat.load(section);
-        lightFormat.load(section);
-        timeFormat.load(section);
+        _settings.forEach(s -> s.load(section));
     }
 
     // ------------------------------------------------------------------------
@@ -528,6 +492,11 @@ public class PlayerState {
      * Scope containing time variables.
      */
     protected Scope _timeScope = new Scope();
+
+    /**
+     * List of all settings.
+     */
+    protected ArrayList<PlayerSetting<?>> _settings = new ArrayList<>();
 
     /**
      * The time at which suspendHUD() was called.
